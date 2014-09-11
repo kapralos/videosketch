@@ -14,6 +14,12 @@
 		BBC2824919C20191001999C9 /* VideoSketchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC2824819C20191001999C9 /* VideoSketchTests.swift */; };
 		BBC2826419C20FC8001999C9 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826219C20FC8001999C9 /* ShaderUtilities.c */; };
 		BBC2826519C20FC8001999C9 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826219C20FC8001999C9 /* ShaderUtilities.c */; };
+		BBC2827019C22DA7001999C9 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826F19C22DA7001999C9 /* RenderView.m */; };
+		BBC2827119C22DA7001999C9 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826F19C22DA7001999C9 /* RenderView.m */; };
+		BBC2827419C23081001999C9 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = BBC2827219C23081001999C9 /* passThrough.fsh */; };
+		BBC2827519C23081001999C9 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = BBC2827219C23081001999C9 /* passThrough.fsh */; };
+		BBC2827619C23081001999C9 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = BBC2827319C23081001999C9 /* passThrough.vsh */; };
+		BBC2827719C23081001999C9 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = BBC2827319C23081001999C9 /* passThrough.vsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +45,11 @@
 		BBC2825D19C20E5D001999C9 /* VideoSketch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "VideoSketch-Bridging-Header.h"; path = "Utils/VideoSketch-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBC2826219C20FC8001999C9 /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
 		BBC2826319C20FC8001999C9 /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
+		BBC2826919C21B20001999C9 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		BBC2826E19C22DA7001999C9 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
+		BBC2826F19C22DA7001999C9 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
+		BBC2827219C23081001999C9 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
+		BBC2827319C23081001999C9 /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +73,9 @@
 		BBC2822719C20191001999C9 = {
 			isa = PBXGroup;
 			children = (
+				BBC2826919C21B20001999C9 /* MyPlayground.playground */,
 				BBC2823219C20191001999C9 /* VideoSketch */,
+				BBC2826D19C225C1001999C9 /* Shaders */,
 				BBC2825819C20B43001999C9 /* Utils */,
 				BBC2824519C20191001999C9 /* VideoSketchTests */,
 				BBC2823119C20191001999C9 /* Products */,
@@ -81,6 +94,8 @@
 		BBC2823219C20191001999C9 /* VideoSketch */ = {
 			isa = PBXGroup;
 			children = (
+				BBC2826E19C22DA7001999C9 /* RenderView.h */,
+				BBC2826F19C22DA7001999C9 /* RenderView.m */,
 				BBC2823519C20191001999C9 /* AppDelegate.swift */,
 				BBC2823719C20191001999C9 /* ViewController.swift */,
 				BBC2823919C20191001999C9 /* Main.storyboard */,
@@ -124,6 +139,16 @@
 			);
 			name = Utils;
 			path = VideoSketch/Utils;
+			sourceTree = "<group>";
+		};
+		BBC2826D19C225C1001999C9 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				BBC2827219C23081001999C9 /* passThrough.fsh */,
+				BBC2827319C23081001999C9 /* passThrough.vsh */,
+			);
+			name = Shaders;
+			path = VideoSketch/Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,7 +231,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBC2827619C23081001999C9 /* passThrough.vsh in Resources */,
 				BBC2823B19C20191001999C9 /* Main.storyboard in Resources */,
+				BBC2827419C23081001999C9 /* passThrough.fsh in Resources */,
 				BBC2823D19C20191001999C9 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,6 +242,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBC2827719C23081001999C9 /* passThrough.vsh in Resources */,
+				BBC2827519C23081001999C9 /* passThrough.fsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBC2823819C20191001999C9 /* ViewController.swift in Sources */,
+				BBC2827019C22DA7001999C9 /* RenderView.m in Sources */,
 				BBC2823619C20191001999C9 /* AppDelegate.swift in Sources */,
 				BBC2826419C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 			);
@@ -236,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBC2824919C20191001999C9 /* VideoSketchTests.swift in Sources */,
+				BBC2827119C22DA7001999C9 /* RenderView.m in Sources */,
 				BBC2826519C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
