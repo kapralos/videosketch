@@ -12,6 +12,8 @@
 		BBC2823B19C20191001999C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBC2823919C20191001999C9 /* Main.storyboard */; };
 		BBC2823D19C20191001999C9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBC2823C19C20191001999C9 /* Images.xcassets */; };
 		BBC2824919C20191001999C9 /* VideoSketchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC2824819C20191001999C9 /* VideoSketchTests.swift */; };
+		BBC2826419C20FC8001999C9 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826219C20FC8001999C9 /* ShaderUtilities.c */; };
+		BBC2826519C20FC8001999C9 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826219C20FC8001999C9 /* ShaderUtilities.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,9 @@
 		BBC2824219C20191001999C9 /* VideoSketchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoSketchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC2824719C20191001999C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBC2824819C20191001999C9 /* VideoSketchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSketchTests.swift; sourceTree = "<group>"; };
+		BBC2825D19C20E5D001999C9 /* VideoSketch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "VideoSketch-Bridging-Header.h"; path = "Utils/VideoSketch-Bridging-Header.h"; sourceTree = "<group>"; };
+		BBC2826219C20FC8001999C9 /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
+		BBC2826319C20FC8001999C9 /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				BBC2823219C20191001999C9 /* VideoSketch */,
+				BBC2825819C20B43001999C9 /* Utils */,
 				BBC2824519C20191001999C9 /* VideoSketchTests */,
 				BBC2823119C20191001999C9 /* Products */,
 			);
@@ -87,6 +93,7 @@
 		BBC2823319C20191001999C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BBC2825D19C20E5D001999C9 /* VideoSketch-Bridging-Header.h */,
 				BBC2823419C20191001999C9 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -107,6 +114,16 @@
 				BBC2824719C20191001999C9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BBC2825819C20B43001999C9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BBC2826219C20FC8001999C9 /* ShaderUtilities.c */,
+				BBC2826319C20FC8001999C9 /* ShaderUtilities.h */,
+			);
+			name = Utils;
+			path = VideoSketch/Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +227,7 @@
 			files = (
 				BBC2823819C20191001999C9 /* ViewController.swift in Sources */,
 				BBC2823619C20191001999C9 /* AppDelegate.swift in Sources */,
+				BBC2826419C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBC2824919C20191001999C9 /* VideoSketchTests.swift in Sources */,
+				BBC2826519C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,11 +346,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = VideoSketch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VideoSketch/Utils/VideoSketch-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -340,11 +362,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = VideoSketch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VideoSketch/Utils/VideoSketch-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -352,6 +376,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -363,6 +388,8 @@
 				INFOPLIST_FILE = VideoSketchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VideoSketch/Utils/VideoSketch-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VideoSketch.app/VideoSketch";
 			};
 			name = Debug;
@@ -371,6 +398,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -378,6 +406,7 @@
 				INFOPLIST_FILE = VideoSketchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VideoSketch/Utils/VideoSketch-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VideoSketch.app/VideoSketch";
 			};
 			name = Release;
