@@ -45,7 +45,6 @@
 		BBC2825D19C20E5D001999C9 /* VideoSketch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "VideoSketch-Bridging-Header.h"; path = "Utils/VideoSketch-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBC2826219C20FC8001999C9 /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
 		BBC2826319C20FC8001999C9 /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
-		BBC2826919C21B20001999C9 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		BBC2826E19C22DA7001999C9 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
 		BBC2826F19C22DA7001999C9 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
 		BBC2827219C23081001999C9 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
@@ -73,7 +72,6 @@
 		BBC2822719C20191001999C9 = {
 			isa = PBXGroup;
 			children = (
-				BBC2826919C21B20001999C9 /* MyPlayground.playground */,
 				BBC2823219C20191001999C9 /* VideoSketch */,
 				BBC2826D19C225C1001999C9 /* Shaders */,
 				BBC2825819C20B43001999C9 /* Utils */,
@@ -461,6 +459,7 @@
 				BBC2824E19C20191001999C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BBC2824F19C20191001999C9 /* Build configuration list for PBXNativeTarget "VideoSketchTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +468,7 @@
 				BBC2825119C20191001999C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
