@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB85EE2019C2354800167820 /* VideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85EE1F19C2354800167820 /* VideoProcessor.swift */; };
+		BB85EE2119C2354800167820 /* VideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85EE1F19C2354800167820 /* VideoProcessor.swift */; };
+		BB85EE2919C377C700167820 /* Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = BB85EE2819C377C700167820 /* Helpers.m */; };
+		BB85EE2A19C377C700167820 /* Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = BB85EE2819C377C700167820 /* Helpers.m */; };
 		BBC2823619C20191001999C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC2823519C20191001999C9 /* AppDelegate.swift */; };
 		BBC2823819C20191001999C9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC2823719C20191001999C9 /* ViewController.swift */; };
 		BBC2823B19C20191001999C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBC2823919C20191001999C9 /* Main.storyboard */; };
@@ -33,6 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BB85EE1F19C2354800167820 /* VideoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoProcessor.swift; sourceTree = "<group>"; };
+		BB85EE2819C377C700167820 /* Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helpers.m; sourceTree = "<group>"; };
+		BB85EE2B19C3787600167820 /* Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helpers.h; sourceTree = "<group>"; };
 		BBC2823019C20191001999C9 /* VideoSketch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoSketch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC2823419C20191001999C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBC2823519C20191001999C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +103,7 @@
 				BBC2826F19C22DA7001999C9 /* RenderView.m */,
 				BBC2823519C20191001999C9 /* AppDelegate.swift */,
 				BBC2823719C20191001999C9 /* ViewController.swift */,
+				BB85EE1F19C2354800167820 /* VideoProcessor.swift */,
 				BBC2823919C20191001999C9 /* Main.storyboard */,
 				BBC2823C19C20191001999C9 /* Images.xcassets */,
 				BBC2823319C20191001999C9 /* Supporting Files */,
@@ -134,6 +142,8 @@
 			children = (
 				BBC2826219C20FC8001999C9 /* ShaderUtilities.c */,
 				BBC2826319C20FC8001999C9 /* ShaderUtilities.h */,
+				BB85EE2819C377C700167820 /* Helpers.m */,
+				BB85EE2B19C3787600167820 /* Helpers.h */,
 			);
 			name = Utils;
 			path = VideoSketch/Utils;
@@ -252,8 +262,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB85EE2019C2354800167820 /* VideoProcessor.swift in Sources */,
 				BBC2823819C20191001999C9 /* ViewController.swift in Sources */,
 				BBC2827019C22DA7001999C9 /* RenderView.m in Sources */,
+				BB85EE2919C377C700167820 /* Helpers.m in Sources */,
 				BBC2823619C20191001999C9 /* AppDelegate.swift in Sources */,
 				BBC2826419C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 			);
@@ -265,6 +277,8 @@
 			files = (
 				BBC2824919C20191001999C9 /* VideoSketchTests.swift in Sources */,
 				BBC2827119C22DA7001999C9 /* RenderView.m in Sources */,
+				BB85EE2A19C377C700167820 /* Helpers.m in Sources */,
+				BB85EE2119C2354800167820 /* VideoProcessor.swift in Sources */,
 				BBC2826519C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
