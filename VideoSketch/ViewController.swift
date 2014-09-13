@@ -51,7 +51,7 @@ class ViewController: UIViewController, VideoProcessorDelegate {
         
         debugView = DebugInfoView(frame:CGRect(x: debugViewPadding, y: self.view.bounds.height - debugViewHeight - debugViewPadding, width: debugViewWidth, height: debugViewHeight))
         debugView?.updateResolution(width: videoProcessor.videoDimensions.width, height: videoProcessor.videoDimensions.height)
-        debugView?.updateFps(fps: videoProcessor.videoFrameRate)
+        debugView?.updateFps(videoProcessor.videoFrameRate)
         view.addSubview(debugView!)
         
         view.bringSubviewToFront(recordButton)
@@ -175,6 +175,27 @@ class ViewController: UIViewController, VideoProcessorDelegate {
             let message = "Code: " + String(error.code) + "\nDomain: " + error.domain + "\nDescription: " + error.description
             let alert = UIAlertView(title: "Error", message: message, delegate: self, cancelButtonTitle: "Ok")
             alert.show()
+        })
+    }
+    
+    func notifyVideoDimensionsChanged(#width: Int32, height: Int32)
+    {
+        dispatch_async(dispatch_get_main_queue(),
+        {
+            if self.debugView != nil
+            {
+                self.debugView!.updateResolution(width: width, height: height)
+            }
+        })
+    }
+    
+    func notifyFramerateChanged(framerate: Float64)
+    {
+        dispatch_async(dispatch_get_main_queue(), {
+            if self.debugView != nil
+            {
+                self.debugView!.updateFps(framerate)
+            }
         })
     }
 }

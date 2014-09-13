@@ -19,6 +19,8 @@ public protocol VideoProcessorDelegate
     func recordingWillStop()
     func recordingDidStop()
     func notifyError(error: NSError)
+    func notifyVideoDimensionsChanged(#width: Int32, height: Int32)
+    func notifyFramerateChanged(framerate: Float64)
 }
 
 public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, AVCaptureVideoDataOutputSampleBufferDelegate
@@ -26,8 +28,40 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     public var delegate : VideoProcessorDelegate?
     
     var previousSecondTimestemps : [CMTime] = []
-    var videoFrameRate : Float64 = 0.0
-    var videoDimensions : CMVideoDimensions = CMVideoDimensions(width: 0, height: 0)
+    private var vFramerate : Float64 = 0.0
+    var videoFrameRate : Float64
+    {
+        get
+        {
+            return vFramerate;
+        }
+        set
+        {
+            if vFramerate != newValue
+            {
+                self.delegate?.notifyFramerateChanged(newValue)
+            }
+            
+            vFramerate = newValue
+        }
+    }
+    
+    var vDimensions : CMVideoDimensions = CMVideoDimensions(width: 0, height: 0)
+    var videoDimensions : CMVideoDimensions
+    {
+        get
+        {
+            return vDimensions
+        }
+        set
+        {
+            if vDimensions.width != newValue.width || vDimensions.height != newValue.height
+            {
+                self.delegate?.notifyVideoDimensionsChanged(width: newValue.width, height: newValue.height)
+            }
+            vDimensions = newValue
+        }
+    }
     var videoType : CMVideoCodecType = CMVideoCodecType()
     
     var captureSession : AVCaptureSession?
@@ -54,7 +88,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     {
         previousSecondTimestemps.append(timestamp)
         let oneSecAgo = CMTimeSubtract(timestamp, CMTimeMake(1, 1))
-        previousSecondTimestemps = previousSecondTimestemps.filter({ CMTimeCompare($0, oneSecAgo) < 0 })
+        previousSecondTimestemps = previousSecondTimestemps.filter({ CMTimeCompare($0, oneSecAgo) >= 0 })
         
         let newRate = Float64(previousSecondTimestemps.count)
         videoFrameRate = (videoFrameRate + newRate) / 2.0

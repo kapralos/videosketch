@@ -36,7 +36,7 @@ class DebugInfoView : UIView
         resolutionLabel?.text = String(width) + " x " + String(height)
     }
     
-    func updateFps(#fps: Float64)
+    func updateFps(fps: Float64)
     {
         fpsLabel?.text = String(format: "%.1f", fps) + " fps"
     }
