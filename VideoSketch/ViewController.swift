@@ -166,5 +166,16 @@ class ViewController: UIViewController, VideoProcessorDelegate {
             self.backgroundRecordingId = UIBackgroundTaskInvalid
         })
     }
+    
+    func notifyError(error: NSError)
+    {
+        dispatch_async(dispatch_get_main_queue(),
+        {
+            // TODO: localize
+            let message = "Code: " + String(error.code) + "\nDomain: " + error.domain + "\nDescription: " + error.description
+            let alert = UIAlertView(title: "Error", message: message, delegate: self, cancelButtonTitle: "Ok")
+            alert.show()
+        })
+    }
 }
 

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BB390CA019C441E6005F14B0 /* DebugInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB390C9F19C441E6005F14B0 /* DebugInfoView.swift */; };
 		BB390CA119C441E6005F14B0 /* DebugInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB390C9F19C441E6005F14B0 /* DebugInfoView.swift */; };
+		BB7892BE19C4B561005DB531 /* ErrorLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7892BD19C4B561005DB531 /* ErrorLogging.swift */; };
+		BB7892BF19C4B561005DB531 /* ErrorLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7892BD19C4B561005DB531 /* ErrorLogging.swift */; };
 		BB85EE2019C2354800167820 /* VideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85EE1F19C2354800167820 /* VideoProcessor.swift */; };
 		BB85EE2119C2354800167820 /* VideoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85EE1F19C2354800167820 /* VideoProcessor.swift */; };
 		BB85EE2919C377C700167820 /* Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = BB85EE2819C377C700167820 /* Helpers.m */; };
@@ -40,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		BB390C9F19C441E6005F14B0 /* DebugInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugInfoView.swift; sourceTree = "<group>"; };
+		BB7892BD19C4B561005DB531 /* ErrorLogging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorLogging.swift; sourceTree = "<group>"; };
 		BB85EE1F19C2354800167820 /* VideoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoProcessor.swift; sourceTree = "<group>"; };
 		BB85EE2819C377C700167820 /* Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helpers.m; sourceTree = "<group>"; };
 		BB85EE2B19C3787600167820 /* Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helpers.h; sourceTree = "<group>"; };
@@ -108,6 +111,7 @@
 				BBC2823519C20191001999C9 /* AppDelegate.swift */,
 				BBC2823719C20191001999C9 /* ViewController.swift */,
 				BB85EE1F19C2354800167820 /* VideoProcessor.swift */,
+				BB7892BD19C4B561005DB531 /* ErrorLogging.swift */,
 				BBC2823919C20191001999C9 /* Main.storyboard */,
 				BBC2823C19C20191001999C9 /* Images.xcassets */,
 				BBC2823319C20191001999C9 /* Supporting Files */,
@@ -272,6 +276,7 @@
 				BB85EE2919C377C700167820 /* Helpers.m in Sources */,
 				BB390CA019C441E6005F14B0 /* DebugInfoView.swift in Sources */,
 				BBC2823619C20191001999C9 /* AppDelegate.swift in Sources */,
+				BB7892BE19C4B561005DB531 /* ErrorLogging.swift in Sources */,
 				BBC2826419C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +288,7 @@
 				BB390CA119C441E6005F14B0 /* DebugInfoView.swift in Sources */,
 				BBC2824919C20191001999C9 /* VideoSketchTests.swift in Sources */,
 				BBC2827119C22DA7001999C9 /* RenderView.m in Sources */,
+				BB7892BF19C4B561005DB531 /* ErrorLogging.swift in Sources */,
 				BB85EE2A19C377C700167820 /* Helpers.m in Sources */,
 				BB85EE2119C2354800167820 /* VideoProcessor.swift in Sources */,
 				BBC2826519C20FC8001999C9 /* ShaderUtilities.c in Sources */,

@@ -18,6 +18,7 @@ public protocol VideoProcessorDelegate
     func recordingDidStart()
     func recordingWillStop()
     func recordingDidStop()
+    func notifyError(error: NSError)
 }
 
 public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, AVCaptureVideoDataOutputSampleBufferDelegate
@@ -69,7 +70,8 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             var success = fileManager.removeItemAtPath(path, error: &error)
             if !success
             {
-                showError(error!)
+                DebugLog("%@", error!)
+                self.delegate?.notifyError(error!)
             }
         }
     }
@@ -115,7 +117,8 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             (url: NSURL!, error: NSError!) -> Void in
             if error != nil
             {
-                self.showError(error)
+                DebugLog("%@", error)
+                self.self.delegate?.notifyError(error)
             }
             else
             {
@@ -146,14 +149,14 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             {
                 if !assetWriterVideoIn!.appendSampleBuffer(sampleBuffer)
                 {
-                    showError(assetWriter!.error)
+                    DebugLog("%@", assetWriter!.error)
                 }
             }
             else if type == AVMediaTypeAudio && assetWriterAudioIn?.readyForMoreMediaData == true
             {
                 if !assetWriterAudioIn!.appendSampleBuffer(sampleBuffer)
                 {
-                    showError(assetWriter!.error)
+                    DebugLog("%@", assetWriter!.error)
                 }
             }
         }
@@ -188,13 +191,13 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             }
             else
             {
-                NSLog("unable to add audio input")
+                DebugLog("unable to add audio input")
                 return false
             }
         }
         else
         {
-            NSLog("unable to apply audio settings")
+            DebugLog("unable to apply audio settings")
             return false
         }
         
@@ -224,13 +227,13 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             }
             else
             {
-                NSLog("unable to add video input")
+                DebugLog("unable to add video input")
                 return false
             }
         }
         else
         {
-            NSLog("unable to apply video settings")
+            DebugLog("unable to apply video settings")
             return false
         }
         
@@ -254,7 +257,8 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             self.assetWriter = AVAssetWriter(URL: self.movieUrl, fileType: kUTTypeQuickTimeMovie as NSString, error: &error)
             if error != nil
             {
-                self.showError(error!)
+                DebugLog("%@", error!)
+                self.self.delegate?.notifyError(error!)
             }
         })
     }
@@ -276,7 +280,8 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             {
                 if self.assetWriter?.status == AVAssetWriterStatus.Failed
                 {
-                    self.showError(self.assetWriter!.error)
+                    DebugLog("%@", self.assetWriter!.error)
+                    self.self.delegate?.notifyError(self.assetWriter!.error)
                 }
                 else
                 {
@@ -464,7 +469,9 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         previewBufferQueue = createBufferQueue(&err).takeUnretainedValue()
         if err != 0
         {
-            showError(NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil))
+            let error = NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil)
+            DebugLog("%@", error)
+            self.delegate?.notifyError(error)
             return
         }
         
@@ -511,14 +518,5 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         {
             captureSession?.startRunning()
         }
-    }
-    
-    // MARK: - Errors
-    private func showError(error: NSError)
-    {
-        // TODO: show error popup
-        #if DEBUG
-            NSLog("%@", error)
-        #endif
     }
 }
