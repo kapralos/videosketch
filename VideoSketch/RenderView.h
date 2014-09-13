@@ -64,7 +64,7 @@
     GLuint passThroughProgram;
 }
 
-- (void)displayPixelBuffer:(CVImageBufferRef)pixelBuffer;
+- (void)displayPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 
 @end
 

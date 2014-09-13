@@ -96,7 +96,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         return CGFloat(angle)
     }
     
-    private func transformToOrientation(orientation: AVCaptureVideoOrientation) -> CGAffineTransform
+    public func transformToOrientation(orientation: AVCaptureVideoOrientation) -> CGAffineTransform
     {
         var transform = CGAffineTransformIdentity
         
@@ -139,7 +139,8 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
                 assetWriter!.startSessionAtSourceTime(CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
             }
         }
-        else if assetWriter?.status == AVAssetWriterStatus.Writing
+        
+        if assetWriter?.status == AVAssetWriterStatus.Writing
         {
             if type == AVMediaTypeVideo && assetWriterVideoIn?.readyForMoreMediaData == true
             {
@@ -176,7 +177,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         }
         
         let numChannels : AnyObject = UInt(asbd.memory.mChannelsPerFrame) as AnyObject
-        let audioCompressionSettings : [NSObject:AnyObject] = [AVFormatIDKey:kAudioFormatMPEG4AAC as AnyObject, AVSampleRateKey:asbd.memory.mSampleRate as AnyObject, AVEncoderBitRatePerChannelKey:64000 as AnyObject, AVNumberOfChannelsKey:numChannels, AVChannelLayoutKey:channelLayoutData as AnyObject]
+        let audioCompressionSettings : [NSObject:AnyObject] = [AVFormatIDKey:kAudioFormatMPEG4AAC as AnyObject, AVSampleRateKey:asbd.memory.mSampleRate as AnyObject, AVEncoderBitRatePerChannelKey:64000 as AnyObject, AVNumberOfChannelsKey:numChannels, AVChannelLayoutKey:channelLayoutData! as AnyObject]
         if (assetWriter?.canApplyOutputSettings(audioCompressionSettings, forMediaType: AVMediaTypeAudio) == true)
         {
             assetWriterAudioIn = AVAssetWriterInput(mediaType: AVMediaTypeAudio, outputSettings: audioCompressionSettings)
@@ -269,18 +270,26 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             self.recordingWillBeStopped = true
             self.delegate?.recordingWillStop()
             
+            self.assetWriterAudioIn?.markAsFinished()
+            self.assetWriterVideoIn?.markAsFinished()
             self.assetWriter?.finishWritingWithCompletionHandler
             {
-                self.assetWriter = nil
-                self.readyToRecordAudio = false
-                self.readyToRecordVideo = false
-                self.saveMovieToCameraRoll()
+                if self.assetWriter?.status == AVAssetWriterStatus.Failed
+                {
+                    self.showError(self.assetWriter!.error)
+                }
+                else
+                {
+                    self.assetWriter = nil
+                    self.assetWriterAudioIn = nil
+                    self.assetWriterVideoIn = nil
+                    self.readyToRecordAudio = false
+                    self.readyToRecordVideo = false
+                    self.saveMovieToCameraRoll()
+                }
             }
             
-            if self.assetWriter?.status == AVAssetWriterStatus.Failed
-            {
-                self.showError(self.assetWriter!.error)
-            }
+            
         })
     }
     
@@ -314,49 +323,51 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
                         let pixelBuffer = convertToPixelBuffer(CMSampleBufferGetImageBuffer(sampleBuffer)).takeUnretainedValue()
                         self.delegate?.pixelBufferReadyForDisplay(pixelBuffer)
                     }
+                    CMBufferQueueReset(self.previewBufferQueue!)
                 })
             }
-            
-            dispatch_async(movieWritingQueue, {
-                if self.assetWriter != nil
+        }
+        
+        // TODO: implement mute
+        dispatch_async(movieWritingQueue, {
+            if self.assetWriter != nil
+            {
+                let wasReadyToRecord = self.readyToRecordVideo && self.readyToRecordAudio
+                
+                if (self.videoConnection != nil && connection == self.videoConnection!)
                 {
-                    let wasReadyToRecord = self.readyToRecordVideo && self.readyToRecordAudio
-                    
-                    if (self.videoConnection != nil && connection == self.videoConnection!)
+                    if !self.readyToRecordVideo
                     {
-                        if !self.readyToRecordVideo
-                        {
-                            self.readyToRecordVideo = self.setupAssetWriterVideoIn(formatDescription)
-                        }
-                        
-                        if self.readyToRecordVideo
-                        {
-                            self.writeSampleBuffer(sampleBuffer, ofType: AVMediaTypeVideo)
-                        }
-                    }
-                    else if (self.audioConnection != nil && connection == self.audioConnection!)
-                    {
-                        if !self.readyToRecordAudio
-                        {
-                            self.readyToRecordAudio = self.setupAssetWriterAudioIn(formatDescription)
-                        }
-                        
-                        if self.readyToRecordAudio
-                        {
-                            self.writeSampleBuffer(sampleBuffer, ofType: AVMediaTypeAudio)
-                        }
+                        self.readyToRecordVideo = self.setupAssetWriterVideoIn(formatDescription)
                     }
                     
-                    let isReadyToRecord = self.readyToRecordAudio && self.readyToRecordVideo
-                    if !wasReadyToRecord && isReadyToRecord
+                    if self.readyToRecordVideo && self.readyToRecordAudio
                     {
-                        self.recordingWillBeStarted = false
-                        self.recording = true
-                        self.delegate?.recordingDidStart()
+                        self.writeSampleBuffer(sampleBuffer, ofType: AVMediaTypeVideo)
                     }
                 }
-            })
-        }
+                else if (self.audioConnection != nil && connection == self.audioConnection!)
+                {
+                    if !self.readyToRecordAudio
+                    {
+                        self.readyToRecordAudio = self.setupAssetWriterAudioIn(formatDescription)
+                    }
+                    
+                    if self.readyToRecordAudio && self.readyToRecordVideo
+                    {
+                        self.writeSampleBuffer(sampleBuffer, ofType: AVMediaTypeAudio)
+                    }
+                }
+                
+                let isReadyToRecord = self.readyToRecordAudio && self.readyToRecordVideo
+                if !wasReadyToRecord && isReadyToRecord
+                {
+                    self.recordingWillBeStarted = false
+                    self.recording = true
+                    self.delegate?.recordingDidStart()
+                }
+            }
+        })
     }
     
     private func videoDeviceWithPosition(position: AVCaptureDevicePosition) -> AVCaptureDevice?
@@ -428,12 +439,15 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             captureSession!.addOutput(videoOut)
         }
         videoConnection = videoOut.connectionWithMediaType(AVMediaTypeVideo)
-        videoOrientation = videoConnection!.videoOrientation
+        if videoConnection != nil
+        {
+            videoOrientation = videoConnection!.videoOrientation
+        }
         
         return true
     }
     
-    private func captureSessionStoppedRunning(#notification:NSNotification)
+    func captureSessionStoppedRunning(notification:NSNotification)
     {
         dispatch_async(movieWritingQueue, {
             if self.recording
@@ -446,7 +460,8 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     public func setupAndStartCaptureSession()
     {
         // TODO: how to implement it simpler?
-        let err = createBufferQueue(previewBufferQueue)
+        var err : OSStatus = 0
+        previewBufferQueue = createBufferQueue(&err).takeUnretainedValue()
         if err != 0
         {
             showError(NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil))
@@ -458,7 +473,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             setupCaptureSession()
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("captureSessionStoppedRunning(notification:)"), name: AVCaptureSessionDidStopRunningNotification, object: captureSession)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "captureSessionStoppedRunning:", name: AVCaptureSessionDidStopRunningNotification, object: captureSession)
         
         if captureSession?.running == false
         {
@@ -470,6 +485,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     {
         if captureSession != nil
         {
+            stopRecording()
             captureSession!.stopRunning()
             NSNotificationCenter.defaultCenter().removeObserver(self)
             captureSession = nil

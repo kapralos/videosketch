@@ -9,6 +9,7 @@
 #ifndef VideoSketch_Helpers_h
 #define VideoSketch_Helpers_h
 
+#import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CMBufferQueue.h>
 
@@ -18,8 +19,10 @@ CMAudioFormatDescriptionRef convertToAudioDescription(CMFormatDescriptionRef des
 
 CVPixelBufferRef convertToPixelBuffer(CVImageBufferRef buffer);
 
+AVCaptureVideoOrientation convertToVideoOrientation(UIDeviceOrientation orientation);
+
 CMVideoDimensions getVideoDimensions(CMFormatDescriptionRef description);
 
-OSStatus createBufferQueue(CMBufferQueueRef queue);
+CMBufferQueueRef createBufferQueue(OSStatus* status);
 
 #endif

@@ -18,6 +18,11 @@ CVPixelBufferRef convertToPixelBuffer(CVImageBufferRef buffer)
     return (CVPixelBufferRef)buffer;
 }
 
+AVCaptureVideoOrientation convertToVideoOrientation(UIDeviceOrientation orientation)
+{
+    return (AVCaptureVideoOrientation)orientation;
+}
+
 CMVideoDimensions getVideoDimensions(CMFormatDescriptionRef description)
 {
     if (description)
@@ -31,7 +36,9 @@ CMVideoDimensions getVideoDimensions(CMFormatDescriptionRef description)
     return res;
 }
 
-OSStatus createBufferQueue(CMBufferQueueRef queue)
+CMBufferQueueRef createBufferQueue(OSStatus* status)
 {
-    return CMBufferQueueCreate(kCFAllocatorDefault, 1, CMBufferQueueGetCallbacksForUnsortedSampleBuffers(), &queue);
+    CMBufferQueueRef queue = nil;
+    *status = CMBufferQueueCreate(kCFAllocatorDefault, 1, CMBufferQueueGetCallbacksForUnsortedSampleBuffers(), &queue);
+    return queue;
 }

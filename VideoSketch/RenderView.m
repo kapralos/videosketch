@@ -161,17 +161,6 @@ enum {
 	glEnableVertexAttribArray(ATTRIB_VERTEX);
 	glVertexAttribPointer(ATTRIB_TEXTUREPOSITON, 2, GL_FLOAT, 0, 0, textureVertices);
 	glEnableVertexAttribArray(ATTRIB_TEXTUREPOSITON);
-    
-    // Update uniform values if there are any
-    
-    // Validate program before drawing. This is a good check, but only really necessary in a debug build.
-    // DEBUG macro must be defined in your debug configurations if that's not already the case.
-#if defined(DEBUG)    
-    if (glueValidateProgram(passThroughProgram) != 0) {
-        NSLog(@"Failed to validate program: %d", passThroughProgram);
-        return;
-    }    
-#endif
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -202,7 +191,7 @@ enum {
 	return normalizedSamplingRect;
 }
 
-- (void)displayPixelBuffer:(CVImageBufferRef)pixelBuffer 
+- (void)displayPixelBuffer:(CVPixelBufferRef)pixelBuffer 
 {    
 	if (frameBufferHandle == 0) {
 		BOOL success = [self initializeBuffers];
