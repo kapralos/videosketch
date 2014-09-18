@@ -13,7 +13,7 @@ class DebugInfoView : UIView
     var resolutionLabel : UILabel?
     var fpsLabel : UILabel?
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

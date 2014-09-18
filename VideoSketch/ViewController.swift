@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController, VideoProcessorDelegate {
     var videoProcessor = VideoProcessor()
@@ -41,7 +42,7 @@ class ViewController: UIViewController, VideoProcessorDelegate {
         videoProcessor.setupAndStartCaptureSession()
         
         oglView = RenderView()
-        oglView?.transform = videoProcessor.transformToOrientation(AVCaptureVideoOrientation.Portrait)
+        oglView?.transform = videoProcessor.transformToOrientation(.Portrait)
         view.addSubview(oglView!)
         var bounds = CGRect();
         bounds.size = self.view.convertRect(self.view.bounds, toView:oglView!).size;

@@ -71,7 +71,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     var referenceOrientation : AVCaptureVideoOrientation = .Portrait
     private var videoOrientation = AVCaptureVideoOrientation.Portrait
     
-    var movieUrl : NSURL = NSURL.fileURLWithPath(NSTemporaryDirectory() + "movie.mov")
+    var movieUrl : NSURL = NSURL.fileURLWithPath(NSTemporaryDirectory() + "movie.mov")!
     var assetWriter : AVAssetWriter?
     var assetWriterAudioIn : AVAssetWriterInput?
     var assetWriterVideoIn : AVAssetWriterInput?
@@ -98,10 +98,10 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     {
         let fileManager = NSFileManager.defaultManager()
         let path = fileUrl.path
-        if fileManager.fileExistsAtPath(path)
+        if fileManager.fileExistsAtPath(path!)
         {
             var error : NSError? = nil
-            var success = fileManager.removeItemAtPath(path, error: &error)
+            var success = fileManager.removeItemAtPath(path!, error: &error)
             if !success
             {
                 DebugLog("%@", error!)
@@ -198,11 +198,10 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     
     private func setupAssetWriterAudioIn(formatDescription: CMFormatDescriptionRef) -> Bool
     {
-        let audioFormatDescription = convertToAudioDescription(formatDescription).takeUnretainedValue()
-        let asbd = CMAudioFormatDescriptionGetStreamBasicDescription(audioFormatDescription)
+        let asbd = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription)
         
         var aclSize : UInt = 0
-        let channelLayout = CMAudioFormatDescriptionGetChannelLayout(audioFormatDescription, &aclSize)
+        let channelLayout = CMAudioFormatDescriptionGetChannelLayout(formatDescription, &aclSize)
         var channelLayoutData : NSData?
         if channelLayout != nil && aclSize > 0
         {
@@ -240,7 +239,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     
     private func setupAssetWriterVideoIn(formatDescription: CMFormatDescriptionRef) -> Bool
     {
-        let dimensions = getVideoDimensions(formatDescription)
+        let dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
         
         // TODO: implement custom bitrate
         let bitrate = 11.4
@@ -344,7 +343,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             
             if videoDimensions.width == 0 && videoDimensions.height == 0
             {
-                videoDimensions = getVideoDimensions(formatDescription)
+                videoDimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
             }
             
             if videoType == 0
@@ -359,7 +358,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
                     var sbuf = CMBufferQueueGetHead(self.previewBufferQueue!)
                     if sbuf != nil
                     {
-                        let pixelBuffer = convertToPixelBuffer(CMSampleBufferGetImageBuffer(sampleBuffer)).takeUnretainedValue()
+                        let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
                         self.delegate?.pixelBufferReadyForDisplay(pixelBuffer)
                     }
                     CMBufferQueueReset(self.previewBufferQueue!)
@@ -499,14 +498,18 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     public func setupAndStartCaptureSession()
     {
         // TODO: how to implement it simpler?
-        var err : OSStatus = 0
-        previewBufferQueue = createBufferQueue(&err).takeUnretainedValue()
-        if err != 0
+        var queue : Unmanaged<CMBufferQueue>?
+        var err : OSStatus = CMBufferQueueCreate(kCFAllocatorDefault, 1, CMBufferQueueGetCallbacksForUnsortedSampleBuffers(), &queue)
+        if err != 0 || queue == nil
         {
             let error = NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil)
             DebugLog("%@", error)
             self.delegate?.notifyError(error)
             return
+        }
+        else
+        {
+            previewBufferQueue = queue!.takeUnretainedValue()
         }
         
         if captureSession == nil
