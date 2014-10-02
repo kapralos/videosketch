@@ -18,8 +18,9 @@ public func compileShader(target: GLenum, count: GLsizei, sources:  UnsafePointe
     glCompileShader(shader.memory)
     glGetShaderiv(shader.memory, GLenum(GL_COMPILE_STATUS), &status)
     
+    DebugLog("Failed to compile shader: \(shader.memory)")
     if status == 0 {
-        DebugLog("Failed to compile shader: %d", shader.memory)
+        DebugLog("Failed to compile shader: \(shader.memory)")
     }
     
     return status
@@ -31,7 +32,7 @@ public func linkProgram(program: GLuint) -> GLint
     glLinkProgram(program)
     glGetProgramiv(program, GLenum(GL_LINK_STATUS), &status)
     if status == 0 {
-        DebugLog("Failed to link program: %d", program)
+        DebugLog("Failed to link program: \(program)")
     }
     
     return status
@@ -43,7 +44,7 @@ public func validateProgram(program: GLuint) -> GLint
     glValidateProgram(program)
     glGetProgramiv(program, GLenum(GL_VALIDATE_STATUS), &status)
     if status == 0 {
-        DebugLog("Failed to validate program: %d", program)
+        DebugLog("Failed to validate program: \(program)")
     }
     
     return status

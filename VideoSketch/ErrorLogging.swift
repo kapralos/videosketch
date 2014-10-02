@@ -8,9 +8,9 @@
 
 import Foundation
 
-public func DebugLog(format: String, args: CVarArgType...)
+public func DebugLog(format: String, _ function: String = __FUNCTION__, _ line: Int = __LINE__)
 {
     #if DEBUG
-        NSLog("%@: %@ " + format, __LINE__, __FUNCTION__, args)
+        println("\(function):\(line) - \(format)")
     #endif
 }

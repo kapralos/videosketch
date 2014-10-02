@@ -104,7 +104,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             var success = fileManager.removeItemAtPath(path!, error: &error)
             if !success
             {
-                DebugLog("%@", error!)
+                DebugLog("\(error!)")
                 self.delegate?.notifyError(error!)
             }
         }
@@ -151,7 +151,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             (url: NSURL!, error: NSError!) -> Void in
             if error != nil
             {
-                DebugLog("%@", error)
+                DebugLog("\(error!)")
                 self.self.delegate?.notifyError(error)
             }
             else
@@ -183,14 +183,14 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             {
                 if !assetWriterVideoIn!.appendSampleBuffer(sampleBuffer)
                 {
-                    DebugLog("%@", assetWriter!.error)
+                    DebugLog("\(assetWriter!.error)")
                 }
             }
             else if type == AVMediaTypeAudio && assetWriterAudioIn?.readyForMoreMediaData == true
             {
                 if !assetWriterAudioIn!.appendSampleBuffer(sampleBuffer)
                 {
-                    DebugLog("%@", assetWriter!.error)
+                    DebugLog("\(assetWriter!.error)")
                 }
             }
         }
@@ -290,7 +290,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             self.assetWriter = AVAssetWriter(URL: self.movieUrl, fileType: kUTTypeQuickTimeMovie as NSString, error: &error)
             if error != nil
             {
-                DebugLog("%@", error!)
+                DebugLog("\(error!)")
                 self.self.delegate?.notifyError(error!)
             }
         })
@@ -313,7 +313,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             {
                 if self.assetWriter?.status == AVAssetWriterStatus.Failed
                 {
-                    DebugLog("%@", self.assetWriter!.error)
+                    DebugLog("\(self.assetWriter!.error)")
                     self.self.delegate?.notifyError(self.assetWriter!.error)
                 }
                 else
@@ -503,7 +503,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         if err != 0 || queue == nil
         {
             let error = NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil)
-            DebugLog("%@", error)
+            DebugLog("\(error)")
             self.delegate?.notifyError(error)
             return
         }

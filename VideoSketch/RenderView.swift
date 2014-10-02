@@ -114,7 +114,7 @@ public class RenderView : UIView
         let err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault, videoTextureCache!, pixelBuffer, nil, GLenum(GL_TEXTURE_2D), GLint(GL_RGBA), GLsizei(frameWidth), GLsizei(frameHeight), GLenum(GL_BGRA), GLenum(GL_UNSIGNED_BYTE), 0, &textureRef)
         if err != 0 || textureRef == nil
         {
-            DebugLog("Failed CVOpenGLESTextureCacheCreateTextureFromImage: %d", err)
+            DebugLog("Failed CVOpenGLESTextureCacheCreateTextureFromImage: \(err)")
             return
         }
         
@@ -184,7 +184,7 @@ public class RenderView : UIView
         if err == 0 && cache != nil {
             videoTextureCache = cache?.takeUnretainedValue()
         } else {
-            DebugLog("Error at CVOpenGLESTextureCacheCreate: %d", err)
+            DebugLog("Error at CVOpenGLESTextureCacheCreate: \(err)")
             success = false
         }
         
