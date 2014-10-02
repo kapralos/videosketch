@@ -8,9 +8,12 @@
 
 import Foundation
 
-public func DebugLog(format: String, _ function: String = __FUNCTION__, _ line: Int = __LINE__)
+public func DebugLog(format: String, _ file: String = __FILE__, _ function: String = __FUNCTION__, _ line: Int = __LINE__)
 {
     #if DEBUG
-        println("\(function):\(line) - \(format)")
+        let now = NSDate()
+        var formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd HH:mm:ss.SSS"
+        println("\(formatter.stringFromDate(now)): \(file.lastPathComponent):\(line) \(function): \(format)")
     #endif
 }

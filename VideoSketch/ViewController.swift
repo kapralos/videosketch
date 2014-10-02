@@ -56,8 +56,6 @@ class ViewController: UIViewController, VideoProcessorDelegate {
         view.addSubview(debugView!)
         
         view.bringSubviewToFront(recordButton)
-        
-        DebugLog("\(debugView!)\n\(debugViewHeight)")
     }
     
     override func viewWillAppear(animated: Bool)
