@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Kapralos Software. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
+import UIKit
 
 public func convertToVideoOrientation(orientation : UIDeviceOrientation) -> AVCaptureVideoOrientation
 {

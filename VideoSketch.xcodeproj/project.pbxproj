@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB11461519DC67780010E1E1 /* RenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB11461419DC67780010E1E1 /* RenderView.swift */; };
+		BB11461719DC678F0010E1E1 /* ShaderUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB11461619DC678F0010E1E1 /* ShaderUtils.swift */; };
 		BB390CA019C441E6005F14B0 /* DebugInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB390C9F19C441E6005F14B0 /* DebugInfoView.swift */; };
 		BB390CA119C441E6005F14B0 /* DebugInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB390C9F19C441E6005F14B0 /* DebugInfoView.swift */; };
 		BB77E4C919CB4D5600177230 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB77E4C819CB4D5600177230 /* Utils.swift */; };
@@ -20,10 +22,6 @@
 		BBC2823B19C20191001999C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBC2823919C20191001999C9 /* Main.storyboard */; };
 		BBC2823D19C20191001999C9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBC2823C19C20191001999C9 /* Images.xcassets */; };
 		BBC2824919C20191001999C9 /* VideoSketchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC2824819C20191001999C9 /* VideoSketchTests.swift */; };
-		BBC2826419C20FC8001999C9 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826219C20FC8001999C9 /* ShaderUtilities.c */; };
-		BBC2826519C20FC8001999C9 /* ShaderUtilities.c in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826219C20FC8001999C9 /* ShaderUtilities.c */; };
-		BBC2827019C22DA7001999C9 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826F19C22DA7001999C9 /* RenderView.m */; };
-		BBC2827119C22DA7001999C9 /* RenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC2826F19C22DA7001999C9 /* RenderView.m */; };
 		BBC2827419C23081001999C9 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = BBC2827219C23081001999C9 /* passThrough.fsh */; };
 		BBC2827519C23081001999C9 /* passThrough.fsh in Resources */ = {isa = PBXBuildFile; fileRef = BBC2827219C23081001999C9 /* passThrough.fsh */; };
 		BBC2827619C23081001999C9 /* passThrough.vsh in Resources */ = {isa = PBXBuildFile; fileRef = BBC2827319C23081001999C9 /* passThrough.vsh */; };
@@ -41,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BB11461419DC67780010E1E1 /* RenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderView.swift; sourceTree = "<group>"; };
+		BB11461619DC678F0010E1E1 /* ShaderUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShaderUtils.swift; sourceTree = "<group>"; };
 		BB390C9F19C441E6005F14B0 /* DebugInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugInfoView.swift; sourceTree = "<group>"; };
 		BB77E4C819CB4D5600177230 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		BB7892BD19C4B561005DB531 /* ErrorLogging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorLogging.swift; sourceTree = "<group>"; };
@@ -54,11 +54,6 @@
 		BBC2824219C20191001999C9 /* VideoSketchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoSketchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC2824719C20191001999C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBC2824819C20191001999C9 /* VideoSketchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSketchTests.swift; sourceTree = "<group>"; };
-		BBC2825D19C20E5D001999C9 /* VideoSketch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "VideoSketch-Bridging-Header.h"; path = "Utils/VideoSketch-Bridging-Header.h"; sourceTree = "<group>"; };
-		BBC2826219C20FC8001999C9 /* ShaderUtilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ShaderUtilities.c; sourceTree = "<group>"; };
-		BBC2826319C20FC8001999C9 /* ShaderUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderUtilities.h; sourceTree = "<group>"; };
-		BBC2826E19C22DA7001999C9 /* RenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderView.h; sourceTree = "<group>"; };
-		BBC2826F19C22DA7001999C9 /* RenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RenderView.m; sourceTree = "<group>"; };
 		BBC2827219C23081001999C9 /* passThrough.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.fsh; sourceTree = "<group>"; };
 		BBC2827319C23081001999C9 /* passThrough.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = passThrough.vsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,8 +99,7 @@
 		BBC2823219C20191001999C9 /* VideoSketch */ = {
 			isa = PBXGroup;
 			children = (
-				BBC2826E19C22DA7001999C9 /* RenderView.h */,
-				BBC2826F19C22DA7001999C9 /* RenderView.m */,
+				BB11461419DC67780010E1E1 /* RenderView.swift */,
 				BB390C9F19C441E6005F14B0 /* DebugInfoView.swift */,
 				BBC2823519C20191001999C9 /* AppDelegate.swift */,
 				BBC2823719C20191001999C9 /* ViewController.swift */,
@@ -121,7 +115,6 @@
 		BBC2823319C20191001999C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BBC2825D19C20E5D001999C9 /* VideoSketch-Bridging-Header.h */,
 				BBC2823419C20191001999C9 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -147,9 +140,8 @@
 		BBC2825819C20B43001999C9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				BBC2826219C20FC8001999C9 /* ShaderUtilities.c */,
-				BBC2826319C20FC8001999C9 /* ShaderUtilities.h */,
 				BB77E4C819CB4D5600177230 /* Utils.swift */,
+				BB11461619DC678F0010E1E1 /* ShaderUtils.swift */,
 			);
 			name = Utils;
 			path = VideoSketch/Utils;
@@ -270,12 +262,12 @@
 			files = (
 				BB85EE2019C2354800167820 /* VideoProcessor.swift in Sources */,
 				BBC2823819C20191001999C9 /* ViewController.swift in Sources */,
+				BB11461519DC67780010E1E1 /* RenderView.swift in Sources */,
 				BB77E4C919CB4D5600177230 /* Utils.swift in Sources */,
-				BBC2827019C22DA7001999C9 /* RenderView.m in Sources */,
 				BB390CA019C441E6005F14B0 /* DebugInfoView.swift in Sources */,
+				BB11461719DC678F0010E1E1 /* ShaderUtils.swift in Sources */,
 				BBC2823619C20191001999C9 /* AppDelegate.swift in Sources */,
 				BB7892BE19C4B561005DB531 /* ErrorLogging.swift in Sources */,
-				BBC2826419C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,10 +277,8 @@
 			files = (
 				BB390CA119C441E6005F14B0 /* DebugInfoView.swift in Sources */,
 				BBC2824919C20191001999C9 /* VideoSketchTests.swift in Sources */,
-				BBC2827119C22DA7001999C9 /* RenderView.m in Sources */,
 				BB7892BF19C4B561005DB531 /* ErrorLogging.swift in Sources */,
 				BB85EE2119C2354800167820 /* VideoProcessor.swift in Sources */,
-				BBC2826519C20FC8001999C9 /* ShaderUtilities.c in Sources */,
 				BB77E4CA19CB4D5600177230 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,7 +396,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "VideoSketch/Utils/VideoSketch-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -422,7 +411,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "VideoSketch/Utils/VideoSketch-Bridging-Header.h";
 			};
 			name = Release;
 		};
