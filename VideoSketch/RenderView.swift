@@ -149,7 +149,7 @@ public class RenderView : UIView
     {
         let path = NSBundle.mainBundle().pathForResource(name, ofType: nil)
         var error : NSError?
-        return String.stringWithContentsOfFile(path!, encoding: NSUTF8StringEncoding, error: &error)?.cStringUsingEncoding(NSUTF8StringEncoding)
+        return String(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: &error)?.cStringUsingEncoding(NSUTF8StringEncoding)
     }
     
     private func initializeBuffers() -> Bool

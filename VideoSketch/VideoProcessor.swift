@@ -39,10 +39,13 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         {
             if vFramerate != newValue
             {
+                vFramerate = newValue
+                // Due to some unlcear reason, compiler rejects using blocks with single delegate call
+                // dispatch_async(dispatch_get_global_queue(0, 0), { () -> Void in
+                //    self.delegate?.notifyFramerateChanged(newValue)
+                //})
                 self.delegate?.notifyFramerateChanged(newValue)
             }
-            
-            vFramerate = newValue
         }
     }
     
@@ -57,9 +60,9 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         {
             if vDimensions.width != newValue.width || vDimensions.height != newValue.height
             {
+                vDimensions = newValue
                 self.delegate?.notifyVideoDimensionsChanged(width: newValue.width, height: newValue.height)
             }
-            vDimensions = newValue
         }
     }
     var videoType : CMVideoCodecType = CMVideoCodecType()
@@ -102,7 +105,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         {
             var error : NSError? = nil
             var success = fileManager.removeItemAtPath(path!, error: &error)
-            if !success
+            if !success && error != nil
             {
                 DebugLog("\(error!)")
                 self.delegate?.notifyError(error!)
@@ -152,7 +155,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             if error != nil
             {
                 DebugLog("\(error!)")
-                self.self.delegate?.notifyError(error)
+                self.delegate?.notifyError(error)
             }
             else
             {
@@ -291,7 +294,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             if error != nil
             {
                 DebugLog("\(error!)")
-                self.self.delegate?.notifyError(error!)
+                self.delegate?.notifyError(error!)
             }
         })
     }
@@ -314,7 +317,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
                 if self.assetWriter?.status == AVAssetWriterStatus.Failed
                 {
                     DebugLog("\(self.assetWriter!.error)")
-                    self.self.delegate?.notifyError(self.assetWriter!.error)
+                    self.delegate?.notifyError(self.assetWriter!.error)
                 }
                 else
                 {
