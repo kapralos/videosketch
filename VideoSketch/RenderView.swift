@@ -50,6 +50,13 @@ public class RenderView : UIView
         1.0,  1.0
     ]
     
+    private let screenTextureVertices : [GLfloat] = [
+        0.0, 1.0,
+        1.0, 1.0,
+        0.0, 0.0,
+        1.0, 0.0
+    ]
+    
     required public init(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
@@ -126,22 +133,17 @@ public class RenderView : UIView
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_WRAP_S), GL_CLAMP_TO_EDGE)
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_WRAP_T), GL_CLAMP_TO_EDGE)
         
-        glBindFramebuffer(GLenum(GL_FRAMEBUFFER), frameBufferHandle)
-        glViewport(0, 0, GLsizei(renderBufferWidth), GLsizei(renderBufferHeight))
-        
-        let textureSamplingRect = textureSamplingRectForCroppingTextureWithAspectRatio(CGSize(width: CGFloat(frameWidth), height: CGFloat(frameHeight)), croppingAspectRatio: bounds.size)
-        let textureVertices = [
-            GLfloat(CGRectGetMinX(textureSamplingRect)), GLfloat(CGRectGetMaxY(textureSamplingRect)),
-            GLfloat(CGRectGetMaxX(textureSamplingRect)), GLfloat(CGRectGetMaxY(textureSamplingRect)),
-            GLfloat(CGRectGetMinX(textureSamplingRect)), GLfloat(CGRectGetMinY(textureSamplingRect)),
-            GLfloat(CGRectGetMaxX(textureSamplingRect)), GLfloat(CGRectGetMinY(textureSamplingRect))
-        ]
-        
-        renderWithSquareVertices(squareVertices, textureVertices: textureVertices)
+        bindScreenFramebuffer()
+        renderWithSquareVertices(squareVertices, textureVertices: screenTextureVertices)
         
         glBindTexture(CVOpenGLESTextureGetTarget(texture), 0)
         textureRef?.release()
         CVOpenGLESTextureCacheFlush(videoTextureCache, 0)
+    }
+    
+    private func bindScreenFramebuffer() {
+        glBindFramebuffer(GLenum(GL_FRAMEBUFFER), frameBufferHandle)
+        glViewport(0, 0, GLsizei(renderBufferWidth), GLsizei(renderBufferHeight))
     }
     
     // MARK: - Private
@@ -217,26 +219,5 @@ public class RenderView : UIView
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, 4)
         glBindRenderbuffer(GLenum(GL_RENDERBUFFER), colorBufferHandle)
         oglContext?.presentRenderbuffer(Int(GL_RENDERBUFFER))
-    }
-
-    private func textureSamplingRectForCroppingTextureWithAspectRatio(textureAspectRatio: CGSize, croppingAspectRatio: CGSize) -> CGRect
-    {
-        var normalizedSamplingRect = CGRect()
-        let cropScales = CGSize(width: croppingAspectRatio.width / textureAspectRatio.width, height: croppingAspectRatio.height / textureAspectRatio.height)
-        let maxScale = fmax(cropScales.width, cropScales.height)
-        let scaledTextureSize = CGSize(width: textureAspectRatio.width * maxScale, height: textureAspectRatio.height * maxScale)
-        
-        if cropScales.height > cropScales.width {
-            normalizedSamplingRect.size.width = croppingAspectRatio.width / scaledTextureSize.width
-            normalizedSamplingRect.size.height = 1.0
-        } else {
-            normalizedSamplingRect.size.width = 1.0
-            normalizedSamplingRect.size.height = croppingAspectRatio.height / scaledTextureSize.height
-        }
-        
-        normalizedSamplingRect.origin.x = (1.0 - normalizedSamplingRect.size.width) / 2.0
-        normalizedSamplingRect.origin.y = (1.0 - normalizedSamplingRect.size.height) / 2.0
-        
-        return normalizedSamplingRect
     }
 }

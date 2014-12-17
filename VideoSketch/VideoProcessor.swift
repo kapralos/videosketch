@@ -354,19 +354,10 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
                 videoType = CMFormatDescriptionGetMediaSubType(formatDescription)
             }
             
-            let err = CMBufferQueueEnqueue(previewBufferQueue!, sampleBuffer)
-            if err == 0
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    var sbuf = CMBufferQueueGetHead(self.previewBufferQueue!)
-                    if sbuf != nil
-                    {
-                        let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
-                        self.delegate?.pixelBufferReadyForDisplay(pixelBuffer)
-                    }
-                    CMBufferQueueReset(self.previewBufferQueue!)
-                })
-            }
+            dispatch_async(dispatch_get_main_queue(), {
+                let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
+                self.delegate?.pixelBufferReadyForDisplay(pixelBuffer)
+            })
         }
         
         // TODO: implement mute
@@ -418,7 +409,7 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
         {
             // TODO: find less ugly way to convert
             let dev : AVCaptureDevice? = device as AnyObject? as? AVCaptureDevice
-            if (dev!.position) == position
+            if dev!.position == position
             {
                 return dev
             }

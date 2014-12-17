@@ -118,7 +118,7 @@ class ViewController: UIViewController, VideoProcessorDelegate {
     // MARK: - VideoProcessorDelegate
     func pixelBufferReadyForDisplay(pixelBuffer: CVPixelBufferRef)
     {
-        if UIApplication.sharedApplication().applicationState != UIApplicationState.Background
+        if UIApplication.sharedApplication().applicationState != .Background
         {
             oglView?.displayPixelBuffer(pixelBuffer)
         }
@@ -130,7 +130,7 @@ class ViewController: UIViewController, VideoProcessorDelegate {
         {
             self.recordButton.enabled = false
             // TODO: localization
-            self.recordButton.setTitle("Stop", forState: UIControlState.Normal)
+            self.recordButton.setTitle("Stop", forState: .Normal)
             
             UIApplication.sharedApplication().idleTimerDisabled = true
             self.backgroundRecordingId = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({})
