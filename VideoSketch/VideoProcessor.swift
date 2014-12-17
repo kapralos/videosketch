@@ -72,7 +72,6 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     var captureSession : AVCaptureSession?
     var audioConnection : AVCaptureConnection?
     var videoConnection : AVCaptureConnection?
-    var previewBufferQueue : CMBufferQueueRef?
     var referenceOrientation : AVCaptureVideoOrientation = .Portrait
     private var videoOrientation = AVCaptureVideoOrientation.Portrait
     
@@ -499,21 +498,6 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
     
     public func setupAndStartCaptureSession()
     {
-        // TODO: how to implement it simpler?
-        var queue : Unmanaged<CMBufferQueue>?
-        var err : OSStatus = CMBufferQueueCreate(kCFAllocatorDefault, 1, CMBufferQueueGetCallbacksForUnsortedSampleBuffers(), &queue)
-        if err != 0 || queue == nil
-        {
-            let error = NSError(domain: NSOSStatusErrorDomain, code: Int(err), userInfo: nil)
-            DebugLog("\(error)")
-            self.delegate?.notifyError(error)
-            return
-        }
-        else
-        {
-            previewBufferQueue = queue!.takeUnretainedValue()
-        }
-        
         if captureSession == nil
         {
             setupCaptureSession()
@@ -535,11 +519,6 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             captureSession!.stopRunning()
             NSNotificationCenter.defaultCenter().removeObserver(self)
             captureSession = nil
-        }
-        
-        if previewBufferQueue != nil
-        {
-            previewBufferQueue = nil
         }
     }
     
