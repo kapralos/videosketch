@@ -40,11 +40,10 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             if vFramerate != newValue
             {
                 vFramerate = newValue
-                // Due to some unlcear reason, compiler rejects using blocks with single delegate call
-                // dispatch_async(dispatch_get_global_queue(0, 0), { () -> Void in
-                //    self.delegate?.notifyFramerateChanged(newValue)
-                //})
-                self.delegate?.notifyFramerateChanged(newValue)
+                dispatch_async(dispatch_get_global_queue(0, 0)) {
+                    self.delegate?.notifyFramerateChanged(newValue)
+                    return
+                }
             }
         }
     }
@@ -61,7 +60,10 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             if vDimensions.width != newValue.width || vDimensions.height != newValue.height
             {
                 vDimensions = newValue
-                self.delegate?.notifyVideoDimensionsChanged(width: newValue.width, height: newValue.height)
+                dispatch_async(dispatch_get_global_queue(0, 0)) {
+                    self.delegate?.notifyVideoDimensionsChanged(width: newValue.width, height: newValue.height)
+                    return
+                }
             }
         }
     }
@@ -108,7 +110,10 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             if !success && error != nil
             {
                 DebugLog("\(error!)")
-                self.delegate?.notifyError(error!)
+                dispatch_async(dispatch_get_global_queue(0, 0)) {
+                    self.delegate?.notifyError(error!)
+                    return
+                }
             }
         }
     }
@@ -155,7 +160,10 @@ public class VideoProcessor : NSObject, AVCaptureAudioDataOutputSampleBufferDele
             if error != nil
             {
                 DebugLog("\(error!)")
-                self.delegate?.notifyError(error)
+                dispatch_async(dispatch_get_global_queue(0, 0)) {
+                    self.delegate?.notifyError(error)
+                    return
+                }
             }
             else
             {
