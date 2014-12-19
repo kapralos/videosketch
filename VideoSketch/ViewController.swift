@@ -82,7 +82,8 @@ class ViewController: UIViewController, VideoProcessorDelegate {
         videoProcessor.stopCaptureSession()
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -90,12 +91,9 @@ class ViewController: UIViewController, VideoProcessorDelegate {
     @IBAction func toggleRecording(sender:AnyObject!)
     {
         recordButton.enabled = false
-        if videoProcessor.recording
-        {
+        if videoProcessor.recording {
             videoProcessor.stopRecording()
-        }
-        else
-        {
+        } else {
             videoProcessor.startRecording()
         }
     }
@@ -126,78 +124,69 @@ class ViewController: UIViewController, VideoProcessorDelegate {
     
     func recordingWillStart()
     {
-        dispatch_async(dispatch_get_main_queue(),
-        {
+        dispatch_async(dispatch_get_main_queue()) {
             self.recordButton.enabled = false
             // TODO: localization
             self.recordButton.setTitle("Stop", forState: .Normal)
             
             UIApplication.sharedApplication().idleTimerDisabled = true
             self.backgroundRecordingId = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({})
-        })
+        }
     }
     
     func recordingDidStart()
     {
-        dispatch_async(dispatch_get_main_queue(),
-        {
+        dispatch_async(dispatch_get_main_queue()) {
             self.recordButton.enabled = true
-        })
+        }
     }
     
     func recordingWillStop()
     {
-        dispatch_async(dispatch_get_main_queue(),
-        {
+        dispatch_async(dispatch_get_main_queue()) {
             // TODO: localization
             self.recordButton.setTitle("Record", forState: UIControlState.Normal)
             self.recordButton.enabled = false
             self.videoProcessor.pauseCaptureSession()
-        })
+        }
     }
     
     func recordingDidStop()
     {
-        dispatch_async(dispatch_get_main_queue(),
-        {
+        dispatch_async(dispatch_get_main_queue()) {
             self.videoProcessor.resumeCaptureSession()
             self.recordButton.enabled = true
             UIApplication.sharedApplication().idleTimerDisabled = false
             UIApplication.sharedApplication().endBackgroundTask(self.backgroundRecordingId)
             self.backgroundRecordingId = UIBackgroundTaskInvalid
-        })
+        }
     }
     
     func notifyError(error: NSError)
     {
-        dispatch_async(dispatch_get_main_queue(),
-        {
+        dispatch_async(dispatch_get_main_queue()) {
             // TODO: localize
             let message = "Code: " + String(error.code) + "\nDomain: " + error.domain + "\nDescription: " + error.description
             let alert = UIAlertView(title: "Error", message: message, delegate: self, cancelButtonTitle: "Ok")
             alert.show()
-        })
+        }
     }
     
     func notifyVideoDimensionsChanged(#width: Int32, height: Int32)
     {
-        dispatch_async(dispatch_get_main_queue(),
+        dispatch_async(dispatch_get_main_queue())
         {
-            if self.debugView != nil
-            {
-                self.debugView!.updateResolution(width: width, height: height)
-            }
-        })
+            self.debugView?.updateResolution(width: width, height: height)
+            return
+        }
     }
     
     func notifyFramerateChanged(framerate: Float64)
     {
-        dispatch_async(dispatch_get_main_queue(), {
-            if self.debugView != nil
-            {
-                self.debugView!.updateFps(framerate)
-            }
-        })
+        dispatch_async(dispatch_get_main_queue()) {
+            self.debugView?.updateFps(framerate)
+            return
+        }
     }
 }
 

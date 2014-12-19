@@ -13,11 +13,13 @@ class DebugInfoView : UIView
     var resolutionLabel : UILabel?
     var fpsLabel : UILabel?
     
-    required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder)
+    {
         super.init(coder: aDecoder)
     }
     
-    override required init(frame: CGRect) {
+    override required init(frame: CGRect)
+    {
         super.init(frame: frame)
         
         resolutionLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height / 2.0))

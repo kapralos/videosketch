@@ -36,7 +36,7 @@ public class RenderView : UIView
     var renderBufferWidth = 0
     var renderBufferHeight = 0
     
-    private var oglContext : EAGLContext?
+    private var oglContext = EAGLContext(API: .OpenGLES2)
     private var videoTextureCache : CVOpenGLESTextureCacheRef?
     
     private var frameBufferHandle : GLuint = 0
@@ -70,8 +70,7 @@ public class RenderView : UIView
         var eaglLayer = layer as CAEAGLLayer
         eaglLayer.opaque = true
         eaglLayer.drawableProperties = [ kEAGLDrawablePropertyRetainedBacking:false as AnyObject, kEAGLDrawablePropertyColorFormat:kEAGLColorFormatRGBA8 as AnyObject ]
-        oglContext = EAGLContext(API: .OpenGLES2)
-        let res = EAGLContext.setCurrentContext(oglContext!)
+        let res = EAGLContext.setCurrentContext(oglContext)
     }
     
     public override init()
@@ -166,7 +165,7 @@ public class RenderView : UIView
         glGenRenderbuffers(1, &colorBufferHandle)
         glBindRenderbuffer(GLenum(GL_RENDERBUFFER), colorBufferHandle)
         
-        oglContext?.renderbufferStorage(Int(GL_RENDERBUFFER), fromDrawable: self.layer as CAEAGLLayer)
+        oglContext.renderbufferStorage(Int(GL_RENDERBUFFER), fromDrawable: self.layer as CAEAGLLayer)
         
         var width : GLint = 0
         var height : GLint = 0
@@ -182,7 +181,7 @@ public class RenderView : UIView
         }
         
         var cache : Unmanaged<CVOpenGLESTextureCacheRef>?
-        let err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, nil, oglContext!, nil, &cache)
+        let err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, nil, oglContext, nil, &cache)
         if err == 0 && cache != nil {
             videoTextureCache = cache?.takeUnretainedValue()
         } else {
@@ -218,6 +217,6 @@ public class RenderView : UIView
         
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, 4)
         glBindRenderbuffer(GLenum(GL_RENDERBUFFER), colorBufferHandle)
-        oglContext?.presentRenderbuffer(Int(GL_RENDERBUFFER))
+        oglContext.presentRenderbuffer(Int(GL_RENDERBUFFER))
     }
 }
